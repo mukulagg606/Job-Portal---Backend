@@ -5,7 +5,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 exports.updateProfile = catchAsyncError(async(req,res,next)=>{
     
     const {_id,phoneNo,email} = req.user;
-    const { general_info, experienceList, skills, projectsList, certificatesList, coursesList, contactInfo } = req.body;
+    const { general_info, experienceList, skills, projectsList, certificatesList, coursesList, contact_info } = req.body;
     
     await Profile.updateOne({
         user_id : _id},{  
@@ -14,7 +14,7 @@ exports.updateProfile = catchAsyncError(async(req,res,next)=>{
        
         experience: experienceList,
 
-       skills:skills,
+        skills:skills,
 
         project:projectsList,
 
@@ -22,7 +22,7 @@ exports.updateProfile = catchAsyncError(async(req,res,next)=>{
 
         course: coursesList,
 
-        contact_info:contactInfo,
+        contact_info:contact_info,
     }, {
         upsert: true
     }

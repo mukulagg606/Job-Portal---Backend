@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route("/updateprofile").post(auth,updateProfile);
 
-router.route("/viewuserprofile").get(auth,getUserDetails);
+router.route("/getuserprofile").get(auth,getUserDetails);
 
 
 module.exports = router;
