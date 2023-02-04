@@ -83,7 +83,7 @@ exports.sendLoginOtp = catchAsyncError(async(req,res,next)=>{
        return next (new ErrorHandler("User not found",400))
       }
      
-      if (user.phoneOTP !== otp) {
+      if (user.phoneOTP === "" || user.phoneOTP !== otp) {
        return next (new ErrorHandler("incorrect otp",400))
       }
       const token = createJwtToken({ userId: user._id });

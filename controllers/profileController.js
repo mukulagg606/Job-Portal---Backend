@@ -5,54 +5,24 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 exports.updateProfile = catchAsyncError(async(req,res,next)=>{
     
     const {_id,phoneNo,email} = req.user;
-    const {full_name,headline,company_name,position,date_of_joining,date_of_resigning,work_description,used_skills,
-    skills_name,years_of_experience,project_title,project_url,project_description,project_duration,
-    license_name,certificate_issuing_organisation,certificate_link,certificate_issue_date,course_name,course_issuing_organisation,
-    skype_id} = req.body;
-     await Profile.updateOne({
+    const { general_info, experienceList, skills, projectsList, certificatesList, coursesList, contactInfo } = req.body;
+    
+    await Profile.updateOne({
         user_id : _id},{  
     
-        general_info:{
-        full_name,
-        headline},
+        general_info:general_info,
        
-        experience:{
-        company_name,
-        date_of_joining,
-        date_of_resigning,
-        work_description,
-        used_skills
-    },
+        experience: experienceList,
 
-       skills:{ 
-        skills_name,
-        years_of_experience
-    },
+       skills:skills,
 
-        ad_project:{
-        project_title,
-        project_url,
-        project_description,
-        project_duration
-    },
+        project:projectsList,
 
-        add_licenses_and_certificates:{
-        license_name,
-        certificate_issuing_organisation,
-        certificate_link,
-        certificate_issue_date
-    },
+        licenses_and_certificates:certificatesList,
 
-        add_course:{
-        course_name,
-        course_issuing_organisation
-    },
+        course: coursesList,
 
-        contact_info:{
-        phoneNo:phoneNo,
-        email:email,
-        skype_id
-    },
+        contact_info:contactInfo,
     }, {
         upsert: true
     }

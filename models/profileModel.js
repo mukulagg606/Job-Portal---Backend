@@ -4,14 +4,14 @@ const profileSchema = new mongoose.Schema({
 general_info:{
     full_name:{
       type:String,
-},
+    },
     headline:{
       type:String,
       max:[30,"Please be precise"]
     },
 },
 
-experience:
+experience:[
     {    
     company_name:{
         type:String,
@@ -34,6 +34,7 @@ experience:
         type:[String],
     }        
 },
+],
 skills:
     {
     skills_name:{
@@ -43,7 +44,7 @@ skills:
         type:Number,
     }
 },
-add_project:
+project:[
     {
         project_title:{
             type:String,
@@ -58,7 +59,8 @@ add_project:
             type:String,
         }
     },
-add_licenses_and_certificates:
+],    
+licenses_and_certificates:[
     {
         license_name:{
             type:String,
@@ -72,9 +74,9 @@ add_licenses_and_certificates:
         certificate_issue_date:{
             type:Date
         }
-    }
-,
-add_course:
+    },
+],    
+course:[
     {
         course_name:{
             type:String
@@ -83,6 +85,7 @@ add_course:
             type:String
         }
     },
+],    
 contact_info:{
     phoneNo:{
         type:String,
