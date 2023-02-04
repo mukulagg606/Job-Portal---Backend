@@ -6,9 +6,9 @@ const { generateOTP, fast2sms } = require("../utils/otp.js");
 
 //Register a User
 exports.registerUser = catchAsyncError(async(req,res,next) => {
-    //console.log("hi"+req.body)
+    
     const {name, phoneNo, email} = req.body;
-    //console.log("hiiiii"+JSON.stringify(req.body))
+    
     const phoneExist = await User.findOne({ phoneNo });
 
     if (phoneExist) {
@@ -21,14 +21,6 @@ exports.registerUser = catchAsyncError(async(req,res,next) => {
         email:email,
     });
 
-    res.status(200).json({
-        success:true,
-        message:"User created successfully",
-        data: {
-            userId: user._id,
-          },
-    })
-
     const otp = generateOTP(6);
     user.phoneOTP = otp;
     await user.save();
@@ -38,6 +30,13 @@ exports.registerUser = catchAsyncError(async(req,res,next) => {
         contactNumber: Number(user.phoneNo),
       },
     );
+    res.status(200).json({
+      success:true,
+      message:"User created successfully",
+      data: {
+          userId: user._id,
+        },
+  })
   } 
 );
 
@@ -50,15 +49,7 @@ exports.sendLoginOtp = catchAsyncError(async(req,res,next)=>{
         if (!user) {
          return next (new ErrorHandler("Phone Number not found",404))
         }
-    
-        res.status(201).json({
-          type: "success",
-          message: "OTP sended to your registered phone number",
-          data: {
-            userId: user._id,
-          },
-        });
-    
+
         const otp = generateOTP(6);
         console.log(otp);
         user.phoneOTP = otp;
@@ -71,6 +62,14 @@ exports.sendLoginOtp = catchAsyncError(async(req,res,next)=>{
         },
        
       );
+      res.status(201).json({
+        type: "success",
+        message: "OTP sended to your registered phone number",
+        data: {
+          userId: user._id,
+        },
+      });
+  
   });
   
 
@@ -79,19 +78,19 @@ exports.sendLoginOtp = catchAsyncError(async(req,res,next)=>{
     
       const { otp, phoneNo } = req.body;
       const user = await User.findOne({phoneNo});
-      //console.log("1")
+      
       if (!user) {
        return next (new ErrorHandler("User not found",400))
       }
-      //console.log("2")
+     
       if (user.phoneOTP !== otp) {
        return next (new ErrorHandler("incorrect otp",400))
       }
       const token = createJwtToken({ userId: user._id });
-      //console.log("3")
+     
       user.phoneOTP = "";
       await user.save();
-      //console.log("4")
+  
       res.status(201).json({
         type: "success",
         message: "OTP verified successfully",
