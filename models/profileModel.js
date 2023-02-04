@@ -1,0 +1,103 @@
+const mongoose = require("mongoose");
+
+const profileSchema = new mongoose.Schema({
+general_info:{
+    full_name:{
+      type:String,
+},
+    headline:{
+      type:String,
+      max:[30,"Please be precise"]
+    },
+},
+
+experience:
+    {    
+    company_name:{
+        type:String,
+        max:[30]
+    },
+    position:{
+        type:String,
+    },
+    date_of_joining:{
+        type:Date,
+    },
+    date_of_resigning:{
+        type:Date
+    },
+    work_description:{
+        type:String,
+        max:[200,"Max limit reached"]
+    },
+    used_skills:{
+        type:[String],
+    }        
+},
+skills:
+    {
+    skills_name:{
+        type:[String],
+    },
+    years_of_experience:{
+        type:Number,
+    }
+},
+add_project:
+    {
+        project_title:{
+            type:String,
+        },
+        project_url:{
+            type:String,
+        },
+        project_description:{
+            type:String,
+        },
+        project_duration:{
+            type:String,
+        }
+    },
+add_licenses_and_certificates:
+    {
+        license_name:{
+            type:String,
+        },
+        certificate_issuing_organisation:{
+            type:String,
+        },
+        certificate_link:{
+            type:String,
+        },
+        certificate_issue_date:{
+            type:Date
+        }
+    }
+,
+add_course:
+    {
+        course_name:{
+            type:String
+        },
+        course_issuing_organisation:{
+            type:String
+        }
+    },
+contact_info:{
+    phoneNo:{
+        type:String,
+    },
+    email:{
+        type:String,
+    },
+    skype_id:{
+        type:String
+    }
+},
+user_id:{
+    type:String,
+}
+
+});
+
+module.exports = mongoose.model("Profile",profileSchema);
